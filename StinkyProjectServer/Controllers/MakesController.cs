@@ -52,8 +52,9 @@ namespace StinkyProjectServer.Controllers
                 {
                     MakeId = make.MakeId,
                     Name = make.Name,
-                    CarAmount = make.Cars.Count(),
- 
+                    Cars = make.Cars,
+                    CarAmount = make.Cars.Count()
+
                 }).SingleAsync();
             return make;
 

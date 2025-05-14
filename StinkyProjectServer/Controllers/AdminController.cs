@@ -15,7 +15,7 @@ namespace StinkyProjectServer.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult> LoginAsync(LoginRequest request)
         {
-            User user = await userManager.FindByNameAsync(request.UserName) ?? throw new ArgumentException();
+            User user = await userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
                 return Unauthorized("Error: Unknown User");
