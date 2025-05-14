@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StinkyModel;
 using StinkyProjectServer.Dto;
+using StinkyModel;
 
 namespace StinkyProjectServer.Controllers
 {
@@ -42,6 +43,7 @@ namespace StinkyProjectServer.Controllers
             return make;
         }
 
+        [Authorize]
         [HttpGet("GetCarAmount/{id}")]
         public async Task<ActionResult<MakeCarAmount>> GetCarAmount(int id)
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StinkyModel;
@@ -16,9 +17,28 @@ namespace StinkyProjectServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeedController(Comp584DatabaseContext context, IHostEnvironment environment) : ControllerBase
+    public class SeedController(Comp584DatabaseContext context, IHostEnvironment environment,
+        UserManager<User> userManager) : ControllerBase
     {
         string _pathName = Path.Combine(environment.ContentRootPath, "Data/2020.csv");
+
+
+        [HttpPost("User")]
+        public async Task ImportUserAsync()
+        {
+
+            User user = new()
+            {
+                UserName = "user",
+                Email = "user@gmail.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+            };
+            IdentityResult x = await userManager.CreateAsync(user, "Password123!");
+
+            int y = await context.SaveChangesAsync();
+
+
+        }
 
         [HttpPost("Make")]
         public async Task<ActionResult> ImportMakeAsync()
